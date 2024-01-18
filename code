@@ -1,0 +1,51 @@
+import tkinter as tk   
+#  Updates entry widget with the button clicks
+def button_click(number):
+    current = entry.get()               
+    entry.delete(0, tk.END)
+    entry.insert(0, current + str(number))
+
+#    Performs the calcuation and shows the answr
+def calculate():
+    try:
+        expression = entry.get()
+        result = eval(expression)
+        entry.delete(0, tk.END)
+        entry.insert(0, str(result))
+    except Exception as e:
+        entry.delete(0, tk.END)
+        entry.insert(0, "Error with expression")
+
+#  This clears the answer box
+def clear():
+    entry.delete(0, tk.END)
+#  Creates the window for the application
+root = tk.Tk()
+root.title("Calculator")
+root.geometry("400x550") 
+root.configure(bg="#FFFFE0")  
+
+#  Creates a widget for the user to input there question
+entry = tk.Entry(root, font=("Arial", 24)) 
+entry.pack(pady=20) 
+# Creates the frame to hold the buttons
+button_frame = tk.Frame(root)
+button_frame.pack()
+#  Creates the actual number buttons
+for i in range(10):
+    button = tk.Button(button_frame, text=str(i), command=lambda i=i: button_click(i), font=("Arial", 18), width=4, height=2, bg="#FFFFE0") 
+    button.grid(row=i//3, column=i%3, padx=5, pady=5) 
+#  Creates operation buttons
+operations = ["+", "-", "*", "/"]
+for i, op in enumerate(operations):
+    button = tk.Button(button_frame, text=op, command=lambda op=op: button_click(op), font=("Arial", 18), width=4, height=2, bg="#FFFFE0")  
+    button.grid(row=i, column=3, padx=5, pady=5)  
+# Creates a calculating button
+calculate_button = tk.Button(button_frame, text="=", command=calculate, font=("Arial", 18), width=4, height=2, bg="#FFFFE0") 
+calculate_button.grid(row=4, column=3, padx=5, pady=5)  
+# Creates a clear button
+clear_button = tk.Button(button_frame, text="Clear", command=clear, font=("Arial", 18), width=4, height=2, bg="#FFFFE0")  
+clear_button.grid(row=5, column=3, padx=5, pady=5)  
+
+# Starts the loop
+root.mainloop()
